@@ -7,7 +7,10 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(bodyParser.urlencoded({extended:true}))
 
-var items = [];
+app.use(express.static("public"));
+
+
+var items = ["Buy Food"," Eat food", "Cook food"];
 app.set('view engine', 'ejs');
 
 app.get("/", function(req, res) {
@@ -28,7 +31,7 @@ app.post("/", function(req, res)  {
   var item = req.body.newItem
 
  items.push(item);
- 
+
   res.redirect("/");
 })
 

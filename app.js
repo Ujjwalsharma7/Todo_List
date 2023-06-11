@@ -53,9 +53,20 @@ const Item = mongoose.model("Item", itemSchema)
 
 app.get("/", function(req, res) {
 
-const day = date.getDate();
+  Item.find({})
+  .then(data =>{
+    res.render("list", {listTitle: "Today", newListItems: data});
+  })
+  .catch(err => {
+    console.log("Mongo not connected")
+    console.log(err)
+  })
+  
 
-  res.render("list", {listTitle: day, newListItems: items});
+
+
+
+  
 
 });
 

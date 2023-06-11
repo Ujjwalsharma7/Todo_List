@@ -28,40 +28,41 @@ const itemSchema = {
 
 const Item = mongoose.model("Item", itemSchema)
 
-// const item1 = new Item({
-//   name: "Welcome to your todoList"
-// });
+const item1 = new Item({
+  name: "Welcome to your todoList"
+});
 
-// const item2 = new Item({
-//   name: "Hit the + button to add a new item"
-// })
+const item2 = new Item({
+  name: "Hit the + button to add a new item"
+})
 
-// const item3 = new Item({
-//   name: "<-- Hit this to delete an item"
-// })
+const item3 = new Item({
+  name: "<-- Hit this to delete an item"
+})
 
-// const defaultItem = [item1, item2, item3]
+const defaultItem = [item1, item2, item3]
 
-// Item.insertMany(defaultItem)
-// .then( res => {
-//   console.log("Succesfuly inserted items")
-// })
-// .catch(e => {
-//   console.log(e)
-// })
 
 
 app.get("/", function(req, res) {
 
   Item.find({})
   .then(data =>{
+    if(data.length === 0){
+      Item.insertMany(defaultItem)
+      .then( res => {
+        console.log("Succesfuly inserted items")
+      })
+      .catch(e => {
+        console.log(e)
+      })
+      res.redirect("/");
+
+    } else{
     res.render("list", {listTitle: "Today", newListItems: data});
+    }
   })
-  .catch(err => {
-    console.log("Mongo not connected")
-    console.log(err)
-  })
-  
+
 
 
 

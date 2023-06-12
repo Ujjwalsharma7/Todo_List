@@ -135,8 +135,12 @@ app.post("/delete", function(req, res){
     .catch(err => {
       console.log("Mongo not connected")
       console.log(err)
-    })
-    
+    })  
+  } else {
+    List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkedItemId}}})
+      .then( foundlist => {
+        res.redirect("/" + listName);
+      })
   }
 
  

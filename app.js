@@ -90,6 +90,19 @@ app.post("/", function(req, res){
   // }
 });
 
+app.post("/delete", function(req, res){
+  const checkedItemId =  req.body.checkbox;
+  Item.findByIdAndDelete(checkedItemId)
+    .then(() =>{
+      console.log("Sucessfulyy deleted item")
+    })
+    .catch(err => {
+      console.log("Mongo not connected")
+      console.log(err)
+    })
+    
+})
+
 app.get("/work", function(req,res){
   res.render("list", {listTitle: "Work List", newListItems: workItems});
 });

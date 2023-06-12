@@ -42,6 +42,10 @@ const item3 = new Item({
 
 const defaultItem = [item1, item2, item3]
 
+const listSchema = {
+  name: String, 
+  items: [itemsSchema]
+}
 
 
 app.get("/", function(req, res) {
@@ -64,12 +68,12 @@ app.get("/", function(req, res) {
   })
 
 
-
-
-
-  
-
 });
+
+
+app.get("/:customListName", function(req, res){
+  const customListName = req.params.customListName
+})
 
 app.post("/", function(req, res){
 

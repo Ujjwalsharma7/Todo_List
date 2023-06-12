@@ -102,20 +102,24 @@ app.get("/:customListName", function(req, res){
 app.post("/", function(req, res){
 
   const itemName = req.body.newItem;
+  const listName = req.body.list;
 
   const item = new Item({
     name: itemName
   });
 
-  item.save();
-
-  // if (req.body.list === "Work") {
-  //   workItems.push(item);
-  //   res.redirect("/work");
-  // } else {
-  //   items.push(item);
+  if(listName === "Today"){
+    item.save();
     res.redirect("/");
-  // }
+  } else {
+    List.findOne({name: listName})
+      .then(foundlist => {
+        foundlist.items.push(item);
+        foundlist.save();
+        res.redirect("/" + listName);
+      })
+  }
+ 
 });
 
 app.post("/delete", function(req, res){

@@ -95,6 +95,7 @@ app.post("/delete", function(req, res){
   Item.findByIdAndDelete(checkedItemId)
     .then(() =>{
       console.log("Sucessfulyy deleted item")
+      res.redirect("/");
     })
     .catch(err => {
       console.log("Mongo not connected")

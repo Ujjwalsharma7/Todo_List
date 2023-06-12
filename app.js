@@ -79,21 +79,24 @@ app.get("/:customListName", function(req, res){
   List.findOne({name:customListName})
     .then(foundlist => {
      if(!foundlist){
-      console.log("doesn't exist")
+      // Create new list 
+      const list = new List({
+        name: customListName,
+        items: defaultItem
+      })
+     
+      list.save();
+      res.redirect("/" + customListName)
      } else {
-      console.log("exists")
+    //  show an existing
+    res.render("list", {listTitle: foundlist.name , newListItems: foundlist.items})
      }
     })
     .catch(err => {
       console.log(err)
     })
 
-  const list = new List({
-    name: customListName,
-    items: defaultItem
-  })
- 
-  list.save();
+  
 })
 
 app.post("/", function(req, res){
